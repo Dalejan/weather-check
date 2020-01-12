@@ -1,15 +1,12 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+/*
+ *home.page.ts
+ *Archivo principal de lógica, encargado de manejar acciones y eventos de la pantalla principal
+ */
+import { Component, OnInit } from "@angular/core";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
-import { Subject, Observable } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { Observable } from "rxjs";
 import { WeatherService } from "src/app/services/weather-service/weather-service.service";
-import {
-  style,
-  state,
-  animate,
-  transition,
-  trigger
-} from "@angular/animations";
+import { style, animate, transition, trigger } from "@angular/animations";
 
 @Component({
   selector: "app-home",
@@ -24,10 +21,29 @@ import {
     ])
   ]
 })
+
+/**
+ * Componente encargado de manejar la lógica prncipal de la aplicación
+ */
 export class HomePage implements OnInit {
+  /**
+   * Latitud de la ubicación actual del dispositivo
+   */
   public lat: Number;
+
+  /**
+   * Longitud de la ubicación actual del dispositivo
+   */
   public long: Number;
+
+  /**
+   * Datos de respuesta al consumo del api de darksky
+   */
   public data$: Observable<any>;
+
+  /**
+   * Objeto de error por permisos de geolocalización
+   */
   public err: any;
 
   constructor(
@@ -39,12 +55,19 @@ export class HomePage implements OnInit {
     this.getData();
   }
 
+  /**
+   * Método encargado de obtener los datos desde el api de darksky con base en las coordenadas
+   * del dispositivo
+   */
   public async getData() {
     await this.getCoordinates();
     this.data$ = this.weatherService.getWeatherData(this.lat, this.long);
   }
 
-  public getCoordinates() {
+  /**
+   * Método encargado de obtener latitud y longitud del dispositivo
+   */
+  public getCoordinates(): Promise<any> {
     return this.geolocation
       .getCurrentPosition()
       .then(resp => {
@@ -55,9 +78,5 @@ export class HomePage implements OnInit {
         this.err = error;
         console.log("Error getting location", error);
       });
-  }
-
-  public refresh() {
-    this.getData();
   }
 }

@@ -11,13 +11,26 @@ import { map } from "rxjs/operators";
 @Injectable({
   providedIn: "root"
 })
+
+/**
+ * WheaterService
+ * Servicio encargado de consumir el api de darksky
+ */
 export class WeatherService {
+  /**
+   * Clave única para acceder al api
+   */
   private apiKey = "bd6a76a6e2b4a085e42473e17703c0fd";
+  /**
+   * Url del Rest Api
+   */
   private apiUrl = "https://api.darksky.net/forecast/";
+
   constructor(private http: HttpClient) {}
 
   /**
-   *
+   * getWeatherData
+   * Método encargado de obtener la información climática necesaria con base en latitud y longitud
    * @param lat latitud de la geolocalización del dispositivo
    * @param long longitud de la geolocalización del dispositivo
    */

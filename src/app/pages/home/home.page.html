@@ -1,9 +1,9 @@
 <ion-content>
-  <div class="cont">
+  <div class="main-cont">
     <ion-icon
       name="refresh"
       class="refresh-icon"
-      (click)="refresh()"
+      (click)="getData()"
     ></ion-icon>
 
     <div class="cont" *ngIf="data$ | async as data; else loading" [@fadeInOut]>
@@ -12,13 +12,15 @@
         <p>{{data.timezone}}</p>
       </div>
 
-      <sc-skycons
-        class="weather-icon"
-        [weather]="data.icon| iconName"
-        [color]="'white'"
-      ></sc-skycons>
+      <div class="flex">
+        <sc-skycons
+          class="weather-icon"
+          [weather]="data.icon| iconName"
+          [color]="'white'"
+        ></sc-skycons>
 
-      <p class="temperature">{{data.temperature}}°</p>
+        <p class="temperature">{{data.temperature}}°</p>
+      </div>
 
       <div class="meta">
         <div class="col">

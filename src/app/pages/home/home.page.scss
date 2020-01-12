@@ -1,3 +1,7 @@
+.cont {
+  // height: unset !important;
+}
+.main-cont,
 .cont,
 .loading {
   background: #4a8ddc;
@@ -34,15 +38,23 @@
     }
   }
 
-  .weather-icon {
+  .flex {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
-  }
 
-  .temperature {
-    color: white;
-    font-size: 100px;
-    font-weight: 200;
+    .weather-icon {
+      display: flex;
+      width: unset;
+      justify-content: center;
+    }
+
+    .temperature {
+      color: white;
+      font-size: 88px;
+      font-weight: 200;
+    }
   }
 
   .meta {
@@ -95,5 +107,17 @@
   }
   to {
     -webkit-transform: rotate(359deg);
+  }
+}
+
+@media (min-width: 500px) {
+  .refresh-icon {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+  }
+  .main-cont,
+  .cont {
+    padding: 0;
   }
 }
