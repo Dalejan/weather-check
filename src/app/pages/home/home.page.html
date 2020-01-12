@@ -1,8 +1,57 @@
-<ion-content *ngIf="data$ | async as data">
-  <sc-skycons [weather]="data.icon| iconName" [color]="'black'"></sc-skycons>
+<ion-content>
+  <div class="cont">
+    <ion-icon
+      name="refresh"
+      class="refresh-icon"
+      (click)="refresh()"
+    ></ion-icon>
 
-  {{lat}} {{long}}
-  <div>
-    {{data | json}}
+    <div class="cont" *ngIf="data$ | async as data; else loading" [@fadeInOut]>
+      <div class="location">
+        <div class="circle-icon"></div>
+        <p>{{data.timezone}}</p>
+      </div>
+
+      <sc-skycons
+        class="weather-icon"
+        [weather]="data.icon| iconName"
+        [color]="'white'"
+      ></sc-skycons>
+
+      <p class="temperature">{{data.temperature}}°</p>
+
+      <div class="meta">
+        <div class="col">
+          <p>HUMIDITY</p>
+          <p>{{data.humidity | percent}}</p>
+        </div>
+        <div class="col">
+          <p>RAIN</p>
+          <p>{{data.precipProbability | percent}}</p>
+        </div>
+      </div>
+
+      <!-- {{data | json}} -->
+      <p class="summary">
+        {{data.summary | titlecase}}
+      </p>
+    </div>
+
+    <div class="credits">
+      <a href="https://darksky.net/poweredby/">Powered by Dark Sky</a>
+    </div>
   </div>
 </ion-content>
+
+<ng-template #loading>
+  <div class="loading" *ngIf="!err; else error">
+    <ion-icon name="refresh"></ion-icon>
+    <p>We are fetching your data</p>
+  </div>
+
+  <ng-template #error>
+    <p [@fadeInOut]>
+      Error: {{err.message}}
+    </p>
+  </ng-template>
+</ng-template>

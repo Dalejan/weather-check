@@ -15,6 +15,7 @@ import { IconNamePipe } from "src/app/pipes/icon-name/icon-name.pipe";
     FormsModule,
     IonicModule,
     SkyconsModule,
+
     RouterModule.forChild([
       {
         path: "",

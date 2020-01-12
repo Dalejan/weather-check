@@ -29,7 +29,6 @@ export class WeatherService {
       )
       .pipe(
         map((data: any) => {
-          console.log(data);
           return {
             timezone: data.timezone,
             summary: data.currently.summary,

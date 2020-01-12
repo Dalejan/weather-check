@@ -1,3 +1,99 @@
-.gg {
-  background: red;
+.cont,
+.loading {
+  background: #4a8ddc;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  align-items: center;
+  .refresh-icon {
+    color: white;
+    padding: 2px;
+    width: 25px;
+    min-height: 25px;
+    background: #ffffff59;
+    border-radius: 50%;
+  }
+
+  .location {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    .circle-icon {
+      color: white;
+      border: solid 3px white;
+      border-radius: 50%;
+      width: 23px;
+      height: 23px;
+    }
+    p {
+      color: rgba(255, 255, 255, 0.72);
+      margin-left: 5px;
+    }
+  }
+
+  .weather-icon {
+    display: flex;
+    justify-content: center;
+  }
+
+  .temperature {
+    color: white;
+    font-size: 100px;
+    font-weight: 200;
+  }
+
+  .meta {
+    display: flex;
+    color: rgba(255, 255, 255, 0.72);
+    width: 80%;
+    max-width: 400px;
+    min-width: 200px;
+    justify-content: space-between;
+    .col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      p {
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .summary {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 20px;
+  }
+  .credits {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    a {
+      color: white;
+      text-decoration: none;
+      text-align: center;
+      width: 100px;
+    }
+  }
+}
+
+.loading {
+  justify-content: center;
+  ion-icon {
+    color: white;
+    width: 200px;
+    height: 200px;
+    -webkit-animation: rotation 2s infinite linear;
+  }
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
 }
