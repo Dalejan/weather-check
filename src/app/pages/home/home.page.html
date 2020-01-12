@@ -5,8 +5,11 @@
       class="refresh-icon"
       (click)="getData()"
     ></ion-icon>
-
-    <div class="cont" *ngIf="data$ | async as data; else loading" [@fadeInOut]>
+    <div
+      class="cont"
+      *ngIf="!err && data$ | async as data; else loading"
+      [@fadeInOut]
+    >
       <div class="location">
         <div class="circle-icon"></div>
         <p>{{data.timezone}}</p>
@@ -48,12 +51,14 @@
 <ng-template #loading>
   <div class="loading" *ngIf="!err; else error">
     <ion-icon name="refresh"></ion-icon>
-    <p>We are fetching your data</p>
+    <p>
+      We are fetching your data. Ensure you have device location enabled
+    </p>
   </div>
 
   <ng-template #error>
     <p [@fadeInOut]>
-      Error: {{err.message}}
+      Error: {{err.message}}. Please try reloading.
     </p>
   </ng-template>
 </ng-template>

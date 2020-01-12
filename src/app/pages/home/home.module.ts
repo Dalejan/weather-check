@@ -1,21 +1,19 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { IonicModule } from "@ionic/angular";
-import { FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 
 import { HomePage } from "./home.page";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { SkyconsModule } from "ngx-skycons";
 import { IconNamePipe } from "src/app/pipes/icon-name/icon-name.pipe";
+import { LocationAccuracy } from "@ionic-native/location-accuracy/ngx";
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     IonicModule,
     SkyconsModule,
-
     RouterModule.forChild([
       {
         path: "",
@@ -24,6 +22,6 @@ import { IconNamePipe } from "src/app/pipes/icon-name/icon-name.pipe";
     ])
   ],
   declarations: [HomePage, IconNamePipe],
-  providers: [Geolocation]
+  providers: [Geolocation, LocationAccuracy]
 })
 export class HomePageModule {}

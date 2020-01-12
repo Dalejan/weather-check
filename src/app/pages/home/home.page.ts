@@ -2,11 +2,13 @@
  *home.page.ts
  *Archivo principal de lógica, encargado de manejar acciones y eventos de la pantalla principal
  */
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
+import { LocationAccuracy } from "@ionic-native/location-accuracy/ngx";
 import { Observable } from "rxjs";
 import { WeatherService } from "src/app/services/weather-service/weather-service.service";
 import { style, animate, transition, trigger } from "@angular/animations";
+import { Platform } from "@ionic/angular";
 
 @Component({
   selector: "app-home",
@@ -25,7 +27,7 @@ import { style, animate, transition, trigger } from "@angular/animations";
 /**
  * Componente encargado de manejar la lógica prncipal de la aplicación
  */
-export class HomePage implements OnInit {
+export class HomePage {
   /**
    * Latitud de la ubicación actual del dispositivo
    */
@@ -48,11 +50,11 @@ export class HomePage implements OnInit {
 
   constructor(
     private geolocation: Geolocation,
+    private locationAccuracy: LocationAccuracy,
+    public platform: Platform,
     private weatherService: WeatherService
-  ) {}
-
-  public ngOnInit() {
-    this.getData();
+  ) {
+    this.platform.ready().then(() => this.getData());
   }
 
   /**
@@ -60,22 +62,51 @@ export class HomePage implements OnInit {
    * del dispositivo
    */
   public async getData() {
+    this.err = null;
+    this.data$ = null;
     await this.getCoordinates();
     this.data$ = this.weatherService.getWeatherData(this.lat, this.long);
   }
 
   /**
-   * Método encargado de obtener latitud y longitud del dispositivo
+   * Método encargado de obtener latitud y longitud dependiendo del dispositivo
    */
   public getCoordinates(): Promise<any> {
+    if (
+      this.platform.platforms().includes("android") ||
+      this.platform.platforms().includes("ios")
+    ) {
+      // Verifica que el usuario haya otorgado permisos de ubicación
+      return this.locationAccuracy.canRequest().then(() => {
+        return this.locationAccuracy
+          .request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY)
+          .then(
+            () => {
+              return this.getCurrentLocation();
+            },
+            error => {
+              this.err = error;
+              console.log("Error requesting location permissions", error);
+            }
+          );
+      });
+    }
+    return this.getCurrentLocation();
+  }
+
+  /**
+   * Método encargado de obtener la latitud y longtud esperando 10seg por una respuesta
+   */
+  public getCurrentLocation(): Promise<any> {
     return this.geolocation
-      .getCurrentPosition()
+      .getCurrentPosition({ timeout: 10000, enableHighAccuracy: true })
       .then(resp => {
         this.lat = resp.coords.latitude;
         this.long = resp.coords.longitude;
       })
       .catch(error => {
         this.err = error;
+        alert(error.message);
         console.log("Error getting location", error);
       });
   }
