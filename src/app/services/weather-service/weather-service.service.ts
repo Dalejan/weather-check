@@ -24,7 +24,7 @@ export class WeatherService {
   /**
    * Url del Rest Api
    */
-  private apiUrl = "https://api.darksky.net/forecast/";
+  private apiUrl = "https://api.darksky.net/forecast";
 
   constructor(private http: HttpClient) {}
 

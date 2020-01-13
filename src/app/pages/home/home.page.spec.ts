@@ -6,6 +6,7 @@ import { IconNamePipe } from "src/app/pipes/icon-name/icon-name.pipe";
 import { HomePage } from "./home.page";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { LocationAccuracy } from "@ionic-native/location-accuracy/ngx";
 
 describe("HomePage", () => {
   let component: HomePage;
@@ -15,7 +16,7 @@ describe("HomePage", () => {
     TestBed.configureTestingModule({
       declarations: [HomePage, IconNamePipe],
       imports: [IonicModule.forRoot(), SkyconsModule, HttpClientTestingModule],
-      providers: [Geolocation]
+      providers: [Geolocation, LocationAccuracy]
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomePage);
