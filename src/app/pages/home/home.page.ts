@@ -58,6 +58,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.platform.ready().then(() => this.getData());
   }
+
   /**
    * Método encargado de obtener los datos desde el api de darksky con base en las coordenadas
    * del dispositivo

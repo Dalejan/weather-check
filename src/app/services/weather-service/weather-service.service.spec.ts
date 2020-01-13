@@ -10,7 +10,6 @@ describe("WeatherService", () => {
   let httpTestingController: HttpTestingController;
   let service: WeatherService;
   beforeEach(() => {
-    // jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [WeatherService]
@@ -29,9 +28,18 @@ describe("WeatherService", () => {
     expect(service).toBeTruthy();
   });
 
-  it("should return weather data", async(() => {
+  it("should get the correct weather data", async(() => {
     service.getWeatherData(3.4, 20).subscribe(data => {
       expect(data.timezone).toEqual("Africa/Kinshasa");
     });
+
+    const req = httpTestingController.expectOne(request => {
+      return (
+        request.url ===
+        "https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/bd6a76a6e2b4a085e42473e17703c0fd/3.4,20"
+      );
+    });
+
+    expect(req.request.method).toEqual("GET");
   }));
 });
