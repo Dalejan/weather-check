@@ -30,18 +30,11 @@ describe("WeatherService", () => {
     expect(service).toBeTruthy();
   });
 
-  it("should return weather data", () => {
-    service.getWeatherData(3.4, 20).subscribe(data => {
-      console.log(data);
-      expect(data.timezone).toEqual("Africa/Kinshasa");
-      // done();
-    });
-
-    const req = httpTestingController.expectOne(
-      `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/bd6a76a6e2b4a085e42473e17703c0fd/3.4731080999999997,-76.4941796`
-    );
-    expect(req.request.method).toBe("GET");
-
-    httpTestingController.verify();
-  });
+  // it("should return weather data", () => {
+  //   // service.getWeatherData(3.4, 20).subscribe(data => {
+  //   //   console.log(data);
+  //   //   expect(data.timezone).toEqual("Africa/Kinshasa");
+  //   //   // done();
+  //   // });
+  // });
 });
