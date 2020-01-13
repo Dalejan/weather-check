@@ -8,6 +8,7 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { LocationAccuracy } from "@ionic-native/location-accuracy/ngx";
 import { By } from "@angular/platform-browser";
+import { map } from "rxjs/operators";
 
 describe("HomePage", () => {
   let component: HomePage;
@@ -33,16 +34,22 @@ describe("HomePage", () => {
     spyOn(component, "getCurrentLocation");
     component.getData();
     expect(component.getCurrentLocation).toHaveBeenCalled();
+    fixture.whenStable().then(async () => {
+      expect(
+        await component.data$.pipe(map(data => data.temperature))
+      ).not.toBeNull();
+    });
   }));
 
-  // it("should call getData once HomePage have been loaded", async(() => {
-  //   spyOn(component, "getData");
+  it("should call getData once HomePage have been created", async(() => {
+    spyOn(component, "getData");
+    component.ngOnInit();
+    fixture.whenStable().then(() => {
+      expect(component.getData).toHaveBeenCalled();
+    });
+  }));
 
-  //   fixture.detectChanges();
-  //   expect(component.getData).toHaveBeenCalled();
-  // }));
-
-  it("should call getData after onClick in refresh button", async(() => {
+  it("should call getData after onClick in refresh button, and set correct values to the coordinates", async(() => {
     spyOn(component, "getData");
 
     let button = fixture.debugElement.query(By.css("#refresh")).nativeElement;
@@ -50,6 +57,11 @@ describe("HomePage", () => {
 
     fixture.whenStable().then(() => {
       expect(component.getData).toHaveBeenCalled();
+
+      expect(component.lat).toEqual(jasmine.any(Number));
+      expect(component.lat).not.toEqual(0);
+      expect(component.long).toEqual(jasmine.any(Number));
+      expect(component.long).not.toEqual(0);
     });
   }));
 });

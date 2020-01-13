@@ -2,7 +2,7 @@
  *home.page.ts
  *Archivo principal de lógica, encargado de manejar acciones y eventos de la pantalla principal
  */
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { LocationAccuracy } from "@ionic-native/location-accuracy/ngx";
 import { Observable } from "rxjs";
@@ -27,7 +27,7 @@ import { Platform } from "@ionic/angular";
 /**
  * Componente encargado de manejar la lógica prncipal de la aplicación
  */
-export class HomePage {
+export class HomePage implements OnInit {
   /**
    * Latitud de la ubicación actual del dispositivo
    */
@@ -53,10 +53,11 @@ export class HomePage {
     private locationAccuracy: LocationAccuracy,
     public platform: Platform,
     private weatherService: WeatherService
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.platform.ready().then(() => this.getData());
   }
-
   /**
    * Método encargado de obtener los datos desde el api de darksky con base en las coordenadas
    * del dispositivo

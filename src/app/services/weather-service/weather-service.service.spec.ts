@@ -29,9 +29,9 @@ describe("WeatherService", () => {
     expect(service).toBeTruthy();
   });
 
-  // it("should return weather data", async(() => {
-  //   service.getWeatherData(3.4, 20).subscribe(data => {
-  //     expect(data.timezone).toEqual("Africa/Kinshasa");
-  //   });
-  // }));
+  it("should return weather data", async(() => {
+    service.getWeatherData(3.4, 20).subscribe(data => {
+      expect(data.timezone).toEqual("Africa/Kinshasa");
+    });
+  }));
 });
