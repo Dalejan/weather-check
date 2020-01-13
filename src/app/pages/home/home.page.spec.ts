@@ -36,7 +36,7 @@ describe("HomePage", () => {
   }));
 
   // it("should call getData once HomePage have been loaded", async(() => {
-  //   spyOn(component, "getData").and.callFake(component.getData);
+  //   spyOn(component, "getData");
 
   //   fixture.detectChanges();
   //   expect(component.getData).toHaveBeenCalled();

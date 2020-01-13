@@ -5,8 +5,8 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
-import { Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { Observable, of } from "rxjs";
+import { map, catchError } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
@@ -41,16 +41,19 @@ export class WeatherService {
         `https://cors-anywhere.herokuapp.com/${this.apiUrl}/${this.apiKey}/${lat},${long}`
       )
       .pipe(
-        map((data: any) => {
-          return {
-            timezone: data.timezone,
-            summary: data.currently.summary,
-            icon: data.currently.icon,
-            precipProbability: data.currently.precipProbability,
-            temperature: data.currently.temperature,
-            humidity: data.currently.humidity
-          };
-        })
+        map(
+          (data: any) => {
+            return {
+              timezone: data.timezone,
+              summary: data.currently.summary,
+              icon: data.currently.icon,
+              precipProbability: data.currently.precipProbability,
+              temperature: data.currently.temperature,
+              humidity: data.currently.humidity
+            };
+          },
+          catchError(err => of(err))
+        )
       );
   }
 }

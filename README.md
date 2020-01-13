@@ -18,3 +18,7 @@ Run `ionic cordova emulate android --livereload` to open an android device emula
 
 Run `ionic cordova build android` to build the project.
 And `ionic cordova build android --release` for build apk release files
+
+## test
+
+Run `ng test` to run unit testing and open new browser tab to debug karma/jasmine tests

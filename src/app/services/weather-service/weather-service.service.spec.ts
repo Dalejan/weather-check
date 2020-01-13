@@ -1,19 +1,18 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, async } from "@angular/core/testing";
 import { WeatherService } from "./weather-service.service";
 
 import {
   HttpClientTestingModule,
   HttpTestingController
 } from "@angular/common/http/testing";
-import { HttpClientModule } from "@angular/common/http";
 
 describe("WeatherService", () => {
   let httpTestingController: HttpTestingController;
   let service: WeatherService;
   beforeEach(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    // jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, HttpClientModule],
+      imports: [HttpClientTestingModule],
       providers: [WeatherService]
     });
     httpTestingController = TestBed.get(HttpTestingController);
@@ -30,11 +29,9 @@ describe("WeatherService", () => {
     expect(service).toBeTruthy();
   });
 
-  // it("should return weather data", () => {
-  //   // service.getWeatherData(3.4, 20).subscribe(data => {
-  //   //   console.log(data);
-  //   //   expect(data.timezone).toEqual("Africa/Kinshasa");
-  //   //   // done();
-  //   // });
-  // });
+  // it("should return weather data", async(() => {
+  //   service.getWeatherData(3.4, 20).subscribe(data => {
+  //     expect(data.timezone).toEqual("Africa/Kinshasa");
+  //   });
+  // }));
 });
